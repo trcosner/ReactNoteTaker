@@ -19,10 +19,17 @@ var Profile = React.createClass({
   componentDidMount: function(){
     //like init, handles ajax requests, reactfire events, etc.
     this.ref = new Firebase('https://reactgithubnotetaker-5b9c3.firebaseio.com/');
-    var childRef = this.ref.child(this.props.params.username);
+    this.init(this.props.params.username);
+  },
+  componentWillReceiveProps: function(nextProps){
+    this.unbind('notes');
+    this.init(nextProps.params.username);
+  },
+  init: function(username){
+    var childRef = this.ref.child(username);
     this.bindAsArray(childRef, 'notes');
 
-    helpers.getGithubInfo(this.props.params.username)
+    helpers.getGithubInfo(username)
       .then(function(data){
         this.setState({
           bio: data.bio,
