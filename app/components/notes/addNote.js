@@ -21,8 +21,6 @@ class AddNote extends React.Component {
       </div>
     )
   }
-
-
 }
 
 AddNote.propTypes = {
